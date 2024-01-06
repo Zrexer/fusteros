@@ -30,13 +30,37 @@ class MainActivity(object):
                 if "dl" == us[0]:
                     try:
                         link = us[fusutils.List(us).indexOf("dl")+1]
-                        subprocess.getoutput(f"git clone https://github.com/{link}")
+                        print(subprocess.getoutput(f"git clone https://github.com/{link}"))
                     except Exception as e:
                         print(e)
                         pass
                 else:
                     print("Please Set Method:\n    dl")
                     pass
+            
+            elif fusutils.String(user).startsWith("kop"):
+                try:
+                    cmd = fusutils.String(user).replacer("kop ", "")
+                    
+                    if cmd == "kop" or cmd == "":
+                        print("\nkop: does not get any data")
+                    else:
+                        if fusutils.String(cmd).startsWith("cd"):
+                            pathx = fusutils.String(cmd).splitter("cd")
+                            if pathx[0] == "cd" or pathx[0] == "" or pathx[0] == IndexError:
+                                print("kop: cd was not get any directory")
+                            else:
+                                fusutils.PathWorker.changeWay(pathx)
+                        else:
+                            print(subprocess.getoutput(cmd))
+                except Exception as e:
+                    print(e)
+
+            elif user == "exit":
+                exit("\nShutting Down OS ...\n")
+            
+            else:
+                print("\nunknown command: {}".format(user))
 
 if name == "" or name == " " or name == None:
     namex = uuid.uuid4().hex
